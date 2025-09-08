@@ -1,0 +1,11 @@
+# Archivos de IntelliJ IDEA
+.idea/
+*.iml
+
+# Archivos compilados
+*.class
+out/
+
+# Sistema
+.DS_Store
+
