@@ -5,6 +5,7 @@
 # Archivos compilados
 *.class
 out/
+bin/
 
 # Sistema
 .DS_Store
