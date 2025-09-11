@@ -1,16 +1,20 @@
 package poo;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class Empleado extends Persona{
-    private double sueldo;
-    public Empleado(String nombre, String nacionalidad, LocalDate fechaDeNacimineto, double sueldo){
+    private BigDecimal sueldo;
+
+    public Empleado(String nombre, String nacionalidad, LocalDate fechaDeNacimineto, BigDecimal sueldo){
         super(nombre,nacionalidad,fechaDeNacimineto);
-        this.sueldo=sueldo;
+        setSueldo(sueldo);
     }
-    public  double getSueldo() { return sueldo; }
-    public void setSueldo(double sueldo) {
-        if(sueldo<0){
+
+    public  BigDecimal getSueldo() { return sueldo; }
+
+    public void setSueldo(BigDecimal sueldo) {
+        if(sueldo == null || sueldo.signum() < 0){
             throw new IllegalArgumentException("Sueldo Invalido");
         }
         this.sueldo = sueldo;

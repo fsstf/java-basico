@@ -1,6 +1,8 @@
 package poo;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Scanner;
 
 public class PersonaService {
@@ -18,7 +20,7 @@ public class PersonaService {
     public Empleado crearEmpleado() {
         Persona p = crearPersona();
         System.out.print("Sueldo del empleado: ");
-        double sueldo = Double.parseDouble(sc.nextLine());
+        BigDecimal sueldo = new BigDecimal(sc.nextLine());
         return new Empleado(p.getNombre(), p.getNacionalidad(), p.getFechaDeNacimiento(), sueldo);
     }
 
@@ -33,7 +35,22 @@ public class PersonaService {
         }
     }
 
+    public Persona buscarPorNombre( List<Persona> lista) {
+        String nombre = pedirNombre();
+        return lista.stream()
+                .filter(p -> p.getNombre().equalsIgnoreCase(nombre))
+                .findFirst()
+                .orElse(null);
+    }
+
+    public String pedirNombre(){
+        System.out.println("Ingrese el nombre del persona: ");
+        return sc.nextLine();
+    }
+
     public void cerrarScanner() {
         sc.close();
     }
 }
+
+

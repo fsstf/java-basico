@@ -55,6 +55,7 @@ public class Persona {
     public void saludar(){
         System.out.println("Hola mi nombre es "+ getNombre());
     }
+
     //toString
     @Override
     public String toString() {
@@ -69,6 +70,17 @@ public class Persona {
                 && Objects.equals(fechaDeNacimiento, p.fechaDeNacimiento)
                 && Objects.equals(nacionalidad, p.nacionalidad);
     }
+
+    /* equals que prohibe la comparacion de diferentes clases
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Persona p = (Persona) o;
+        return Objects.equals(nombre, p.nombre)
+                && Objects.equals(fechaNacimiento, p.fechaNacimiento);
+    }
+    */
 
     //hashCode
     @Override
