@@ -35,12 +35,12 @@ public class PersonaService {
         }
     }
 
-    public Persona buscarPorNombre( List<Persona> lista) {
+    public Persona buscarPorNombre( List<Persona> lista) throws PersonaNoEncontradaException {
         String nombre = pedirNombre();
         return lista.stream()
                 .filter(p -> p.getNombre().equalsIgnoreCase(nombre))
                 .findFirst()
-                .orElse(null);
+                .orElseThrow(() -> new PersonaNoEncontradaException("No se encontro persona con el nombre: " + nombre));
     }
 
     public String pedirNombre(){

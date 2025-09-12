@@ -6,7 +6,7 @@ import java.time.LocalDate;
 public class Gerente extends Empleado{
     private BigDecimal bono;
 
-    Gerente(String nombre, String nacionalidad , LocalDate fechaDeNacimiento, BigDecimal sueldo, BigDecimal bono){
+    public Gerente(String nombre, String nacionalidad , LocalDate fechaDeNacimiento, BigDecimal sueldo, BigDecimal bono){
         super(nombre,nacionalidad,fechaDeNacimiento,sueldo);
         setBono(bono);
     }

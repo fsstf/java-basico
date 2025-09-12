@@ -6,19 +6,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws PersonaNoEncontradaException {
         PersonaService service = new PersonaService();
 
+        try {
+            Empleado et = new Empleado("Sara", "Mexicana", LocalDate.parse("2002-10-04"), new BigDecimal("10"));
+        }catch (IllegalArgumentException e){
+            System.out.println("Error: "  + e.getMessage());
+        }
+
         Persona p = new Persona("Fernando", "Mexicana", LocalDate.parse("2000-11-21"));
-        Empleado e = new Empleado("Sara", "Mexicana", LocalDate.parse("2002-10-04"),new BigDecimal("4335.3432"));
+
+        Empleado e = new Empleado("Azucena","MX",LocalDate.of(2005,11,10),new BigDecimal("20"));
+
         Gerente g = new Gerente("Sheyla", "Mexicana", LocalDate.parse("1999-11-24"), new BigDecimal("63235.9553"), new BigDecimal("43235.3243"));
-        //Persona i = service.crearPersona();
 
         List<Persona> personas = new ArrayList<>();
         personas.add(p);
-        personas.add(e);
         personas.add(g);
-        //personas.add(i)
+        personas.add(e);
 
         for(Persona x : personas){
             x.saludar();
