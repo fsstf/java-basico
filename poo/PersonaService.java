@@ -24,6 +24,13 @@ public class PersonaService {
         return new Empleado(p.getNombre(), p.getNacionalidad(), p.getFechaDeNacimiento(), sueldo);
     }
 
+    public Gerente crearGerente() {
+        Empleado e = crearEmpleado();
+        System.out.print("Bono del gerente: ");
+        BigDecimal bono = new BigDecimal(sc.nextLine());
+        return new Gerente(e.getNombre(),e.getNacionalidad(),e.getFechaDeNacimiento(),e.getSueldo(),bono);
+    }
+
     private LocalDate pedirFechaDeNacimiento() {
         while (true) {
             try {
