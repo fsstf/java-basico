@@ -1,7 +1,7 @@
 package colecciones;
 
-import poo.Empleado;
-import poo.Gerente;
+import poo.model.Empleado;
+import poo.model.Gerente;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

@@ -1,4 +1,9 @@
-package poo;
+package poo.service;
+
+import poo.exception.PersonaNoEncontradaException;
+import poo.model.Empleado;
+import poo.model.Gerente;
+import poo.model.Persona;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

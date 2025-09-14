@@ -1,13 +1,17 @@
-package poo;
+package poo.app;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
+import poo.model.Persona;
+import poo.factory.PersonaFabrica;
+import poo.exception.PersonaNoEncontradaException;
+import poo.service.PersonaService;
+
 import java.util.*;
 
 public class Main {
     private static final PersonaService personaService = new PersonaService();
     private static final List<Persona> personas = new ArrayList<>();
     private static final Scanner sc = new Scanner(System.in);
+    private static final PersonaFabrica fabrica = new PersonaFabrica();
 
     public static void main(String[] args) {
         int opcion;
@@ -48,16 +52,11 @@ public class Main {
 
     private static void agregarPersona() {
         System.out.println("\n=== Agregar Persona ===");
-        System.out.println("Tipo: 1=Persona, 2=Empleado, 3=Gerente");
-        int tipo = Integer.parseInt(sc.nextLine());
-
-        switch (tipo) {
-            case 1 -> personas.add(personaService.crearPersona());
-            case 2 -> personas.add(personaService.crearEmpleado());
-            case 3 -> personas.add(personaService.crearGerente());
-            default -> System.out.println("Tipo inválido");
+        System.out.println("Tipo: persona / empleado / gerente");
+        String tipo = sc.nextLine();
+        personas.add(fabrica.crear(tipo));
         }
-    }
+
 
     private static void listarPersonas() {
         System.out.println("\n=== Lista de Personas ===");
