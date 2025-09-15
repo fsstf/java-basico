@@ -1,34 +1,36 @@
 package poo.app;
 
+import poo.model.Empleado;
+import poo.dao.EmpleadoDAO;
 import poo.model.Persona;
 import poo.factory.PersonaFabrica;
-import poo.exception.PersonaNoEncontradaException;
 import poo.service.PersonaService;
-
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.*;
 
 public class Main {
+    private static final EmpleadoDAO empleadoDAO = new EmpleadoDAO();
     private static final PersonaService personaService = new PersonaService();
     private static final List<Persona> personas = new ArrayList<>();
     private static final Scanner sc = new Scanner(System.in);
     private static final PersonaFabrica fabrica = new PersonaFabrica();
 
     public static void main(String[] args) {
+
         int opcion;
         do {
             mostrarMenu();
             opcion = Integer.parseInt(sc.nextLine());
             try {
                 switch (opcion) {
-                    case 1 -> agregarPersona();
-                    case 2 -> listarPersonas();
-                    case 3 -> buscarPersonaPorNombre();
-                    case 4 -> mostrarNombres();
-                    case 5 -> mostrarMapa();
+                    case 1 -> agregarEmpleado();
+                    case 2 -> listarEmpleados();
+                    case 3 -> buscarEmpleadoPorId();
+                    case 4 -> actualizarSueldo();
+                    case 5 -> eliminarEmpleado();
                     case 0 -> System.out.println("Saliendo...");
                     default -> System.out.println("Opción inválida");
-
-
                 }
             } catch (Exception e) {
                 System.out.println("Error: " + e.getMessage());
@@ -40,47 +42,57 @@ public class Main {
     }
 
     private static void mostrarMenu() {
-        System.out.println("\n=== Gestor de Empleados ===");
-        System.out.println("1. Agregar Persona/Empleado/Gerente");
-        System.out.println("2. Listar Personas");
-        System.out.println("3. Buscar Persona por nombre");
-        System.out.println("4. Mostrar nombres únicos");
-        System.out.println("5. Mostrar mapa de personas");
+        System.out.println("\n=== Gestor de Empleados (BD) ===");
+        System.out.println("1. Agregar empleado");
+        System.out.println("2. Listar empleados");
+        System.out.println("3. Buscar empleado por ID");
+        System.out.println("4. Actualizar sueldo");
+        System.out.println("5. Eliminar empleado");
         System.out.println("0. Salir");
         System.out.print("Elige una opción: ");
     }
 
-    private static void agregarPersona() {
-        System.out.println("\n=== Agregar Persona ===");
-        System.out.println("Tipo: persona / empleado / gerente");
-        String tipo = sc.nextLine();
-        personas.add(fabrica.crear(tipo));
-        }
+    private static void agregarEmpleado() {
+        System.out.println("Nombre del empleado: ");
+        String nombre = sc.nextLine();
+        System.out.println("Nacionalidad del empleado: ");
+        String nacionalidad = sc.nextLine();
+        System.out.println("Fecha de nacimiento del empleado(YYYY-MM-DD): ");
+        LocalDate fecha =  LocalDate.parse(sc.nextLine());
+        System.out.println("Sueldo del empleado: ");
+        BigDecimal sueldo = new BigDecimal(sc.nextLine());
 
-
-    private static void listarPersonas() {
-        System.out.println("\n=== Lista de Personas ===");
-        personas.forEach(System.out::println);
+        Empleado e = new Empleado(nombre, nacionalidad, fecha, sueldo);
+        empleadoDAO.insertar(e);
     }
 
-    private static void buscarPersonaPorNombre() throws PersonaNoEncontradaException {
-        Persona encontrada = personaService.buscarPorNombre(personas);
-        System.out.println(encontrada);
+    private static void listarEmpleados() {
+        System.out.println("\n==== Lista de empleados ====");
+        empleadoDAO.listar().forEach(System.out::println);
     }
 
-    public static void mostrarNombres(){
-        Set<String> nombres = new HashSet<>();
-        for (Persona persona : personas) {
-            nombres.add(persona.getNombre());
+    private static void buscarEmpleadoPorId() {
+        System.out.print("ID a buscar: ");
+        int id = Integer.parseInt(sc.nextLine());
+        var empleado = empleadoDAO.buscarPorId(id);
+        if (empleado != null) {
+            System.out.println("🔍 Encontrado: " + empleado);
+        } else {
+            System.out.println("⚠️ No existe empleado con ID " + id);
         }
-        System.out.println("Lista de nombres: "+ nombres);
     }
 
-    public static void mostrarMapa(){
-        Map<String, Persona> mapa = new HashMap<>();
-        for (Persona persona : personas) {
-            mapa.put(persona.getNombre(), persona);
-        }
-        System.out.println("Mapa de personas: "+ mapa);
+    private static void actualizarSueldo() {
+        System.out.print("ID del empleado: ");
+        int id = Integer.parseInt(sc.nextLine());
+        System.out.print("Nuevo sueldo: ");
+        BigDecimal nuevoSueldo = new BigDecimal(sc.nextLine());
+        empleadoDAO.actualizarSueldo(id, nuevoSueldo);
+    }
+
+    private static void eliminarEmpleado() {
+        System.out.print("ID a eliminar: ");
+        int id = Integer.parseInt(sc.nextLine());
+        empleadoDAO.eliminar(id);
     }
 }

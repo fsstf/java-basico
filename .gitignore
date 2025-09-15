@@ -10,3 +10,6 @@ bin/
 # Sistema
 .DS_Store
 
+# Configuración local
+poo/config/DatabaseConfig.java
+
